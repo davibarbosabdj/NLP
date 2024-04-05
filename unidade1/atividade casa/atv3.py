@@ -6,8 +6,8 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 nltk.download("wordnet")
 nltk.download("omw-1.4")
+nltk.download('stopwords')
 
-import polars as pl
 import pandas as pd
 
 
@@ -27,14 +27,20 @@ n sei, pergunta a sua mãe
 Acho q tá bom, na hora lá tu n vai ler tudo, só explicar, mas deixa assim para caso eles forem estudar sozinhos depois,
 pra que isso
         """
-txt_normal = norm.normalise(texto)
+texto = norm.normalise(texto)
+
+print("\n")
+print(f"Texto normalizado: ", texto)
 
 ## Token
-nltk.download('stopwords')
+
 stopwords = stopwords.words('portuguese')
 texto_tokens = word_tokenize(texto)
 
 texto_tk = [word for word in texto_tokens if not word in stopwords]
+
+print("\n")
+print(f'Tokens : \n', texto_tk)
 
 ## Stemming
 
@@ -43,7 +49,9 @@ sno = nltk.stem.SnowballStemmer('portuguese')
 for word in texto_tk:
     word_stem = sno.stem(word)
     texto_stem.append(word_stem)
-    
+
+print("\n")
+print(f'Steam : , \n', texto_stem )
 
 ## Lematização
 texto_lema = list()
@@ -51,6 +59,9 @@ wnl = WordNetLemmatizer()
 for word in texto_stem:
     pl = wnl.lemmatize(word, pos="v")
     texto_lema.append(pl)
+
+print("\n")
+print(f'Lemmatização : , \n', texto_stem )
 
 # Dataframe
 
@@ -60,6 +71,6 @@ dt = {
     "Lemma" : [texto_lema]
 }
 
-dt_pl = pd.DataFrame(dt)
+dt = pd.DataFrame(dt)
 
-print(dt_pl)
+print(dt.T)
