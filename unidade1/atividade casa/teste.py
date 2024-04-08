@@ -1,9 +1,8 @@
-#test
-!pip install enelvo
+#ATIVIDADE TABELA
 from enelvo.normaliser import Normaliser
-import nltk
 nltk.download('punkt')
-
+import nltk
+nltk.download('wordnet')
 from nltk.corpus import stopwords
 nltk.download('stopwords')
 import pandas as pd
@@ -16,7 +15,7 @@ norm = Normaliser(tokenizer='readable')
 
 # 3)
 # a) correção do texto
-texto = 'Eu fui ao parke com minha familiya e brinqei muito!'
+texto = 'Eu fui ao parque com mimha familiya e brinqei muito!'
 print('texto original: ', texto)
 
 texto_corrigido = norm.normalise(texto)
@@ -38,10 +37,10 @@ tokens_stemming = [stemmer.stem(token) for token in tokens_sem_stopwords]
 lemmatizer = WordNetLemmatizer()
 tokens_lem = [lemmatizer.lemmatize(token) for token in tokens_sem_stopwords]
 
-df = pd.DataFrame({
+data = pd.DataFrame({
     'tokens': [tokens],
     'stemming': [tokens_stemming],
     'lematização': [tokens_lem]
 })
 
-print(df.T)
+print(data.T)
